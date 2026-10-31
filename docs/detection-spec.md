@@ -10,6 +10,10 @@ type Detector = (frame: ImageData, t: number, calib: Calibration, state: Detecto
 The same code runs live (apps/camera) and offline (eval harness over recorded clips).
 Only pixels inside the calibrated zones are processed.
 
+The basketball machine has two stationary hoops played head-to-head, so every `basket` event
+must say which hoop scored (`left` or `right`), and each hoop needs its own zones and tracks.
+The setup and calibration below describe one hoop. Whether one phone can see both is still open.
+
 ## Camera setup — basketball
 
 - Phone about 1 m to one side of the hoop, **level with the rim**, seeing the rim edge-on

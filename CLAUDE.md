@@ -83,6 +83,7 @@ Rules details: `docs/game-rules.md`. Detection details: `docs/detection-spec.md`
 ## Machine and setup facts (from the owner)
 
 - Basketball machine: 2 hoops · moving hoop: no · balls: orange, much smaller than a standard basketball
+- Basketball is head-to-head: one player per hoop, sharing one clock
 - Rules: use the defaults in `docs/game-rules.md` for now (60 s round, 2 points per basket,
   3 points in the last 10 s, no bonus-time target)
 - Camera phone: Google Pixel 8 Pro (Android, Chrome)
@@ -91,5 +92,4 @@ Rules details: `docs/game-rules.md`. Detection details: `docs/detection-spec.md`
 ## Open questions (ask the owner if unknown)
 
 - How many Pixel 8 Pros are available for cameras? (A level side view may hide one hoop behind the other.)
-- Do the two hoops score for one player or head-to-head? (`docs/game-rules.md` assumes one player per round.)
 - Which Chromecast model? (Decides how the board page reaches the TV.)

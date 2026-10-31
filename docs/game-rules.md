@@ -7,8 +7,10 @@ the machine's original rules (see open questions in CLAUDE.md).
 ## Shared concepts
 
 - **Player:** id, display name. Persists across games for the leaderboard.
-- **Game:** one session at one machine with 1–6 players taking turns.
-- **Turn / round:** one player's go. Basketball = a timed round; putt-skee = N balls.
+- **Game:** one session at one machine with 1–6 players. Basketball players pair up for
+  head-to-head rounds; putt-skee players take turns.
+- **Turn / round:** Basketball = a timed head-to-head round, one player per hoop;
+  putt-skee = one player's N balls.
 - **Event log:** the only source of truth. State = `reduce(events, config)`.
 
 ## Event types
@@ -17,10 +19,10 @@ the machine's original rules (see open questions in CLAUDE.md).
 | --- | --- | --- |
 | `game_created` | host | gameType, config, players |
 | `player_added` / `player_removed` | host | playerId |
-| `round_start` | host | playerId, startedAt (server time) |
-| `basket` | camera | at (time), confidence, clipId? |
+| `round_start` | host | startedAt (server time); basketball: players `{ left, right }` (playerIds); putt-skee: playerId |
+| `basket` | camera | hoop (`left` or `right`), at (time), confidence, clipId? |
 | `throw` | camera | holeId or `miss`, points, confidence, clipId? (putt-skee) |
-| `manual_score` | host | points (+/-), reason |
+| `manual_score` | host | points (+/-), reason; basketball: hoop (`left` or `right`) |
 | `confirm` / `reject` | host | targetEventSeq |
 | `undo` | host | targetEventSeq (defaults to last scoring event) |
 | `round_end` | host | endedAt |
@@ -49,7 +51,12 @@ Rules for the reducer:
   (`at - round_start.startedAt`), not on when the event arrived.
 - Time left = `roundSeconds + bonus earned - (now - startedAt)`; every screen computes it
   the same way from the log plus the current time.
-- Round result = total points; round counts toward the leaderboard only if it ended normally.
+- **Head-to-head:** two players, one per hoop, share one clock. A basket scores for the
+  player on its `hoop`.
+- Round result = each player's total points. Higher total wins; equal totals are a draw.
+- If either player reaches `bonusTimeTarget`, the shared clock extends once for both.
+- A round counts toward the leaderboard only if it ended normally. Each player's total is
+  a separate leaderboard entry.
 
 ## Putt-skee (`gameType: 'puttskee'`) — Phase 6
 
