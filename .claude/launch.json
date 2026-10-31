@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "camera",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@arcade/camera", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "board",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@arcade/board", "dev"],
+      "port": 5174
+    },
+    {
+      "name": "host",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@arcade/host", "dev"],
+      "port": 5175
+    }
+  ]
+}
